@@ -11,7 +11,7 @@ public class FVector
 	public double y;
 	public double x;
 	
-	public double charge = 1; 
+	public double charge = 100; 
 	public boolean moveable = true; 
 	
 
@@ -24,11 +24,14 @@ public class FVector
 	public void initAcceleration(){
 		
 		Random r = new Random();
-		double nX = (double) r.nextInt(6);
-		double nY = (double) r.nextInt(6);
+		double nX = -3d + ((double) r.nextInt(6));
+		double nY = -3d + ((double) r.nextInt(6));
 		//System.out.println(" || " +  nX + " < > " + nY);
-		currentAcceleration = new FVector(-3d+nX, -3d+nY);
-		nextAcceleration = new FVector(-3d+nX, -3d+nY);
+		//currentAcceleration = new FVector(-3d+nX, -3d+nY);
+		//nextAcceleration = new FVector(-3d+nX, -3d+nY);
+		
+		currentAcceleration = new FVector(x, y);
+		nextAcceleration = new FVector(x, y);
 	}
 
 	public boolean setParentVector(FVector parentVector) {
@@ -43,8 +46,16 @@ public class FVector
 		return (int) x;
 	}
 	
+	public int getXCoord(double SCALE_FACTOR, int X_TRANSLATION) {
+		return (int) ((x*SCALE_FACTOR))+X_TRANSLATION;
+	}
+	
 	public int getYCoord() {
 		return (int) y;
+	}
+	
+	public int getYCoord(double SCALE_FACTOR, int Y_TRANSLATION) {
+		return (int) ((y*SCALE_FACTOR))+Y_TRANSLATION;
 	}
 	
 	public FVector add(FVector fvector){

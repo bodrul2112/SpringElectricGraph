@@ -6,6 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -14,7 +19,7 @@ import javax.swing.Timer;
 
 import model.animation.drawable.DrawableObj;
 
-public class AnimationPanel extends JPanel
+public class AnimationPanel extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener
 {
 	
 	/**
@@ -63,6 +68,9 @@ public class AnimationPanel extends JPanel
 				self.repaint();
 			}
 		});
+		
+		this.addMouseListener(this);
+		this.addMouseMotionListener(this);
 	}
 	
 	@Override
@@ -94,5 +102,109 @@ public class AnimationPanel extends JPanel
 	}
 	public void stopAnimation(){
 		timer.stop();
+	}
+
+	
+	
+	/* Mouse Listener */
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		
+		arg0.consume();
+		for(DrawableObj drawable : drawables){
+			if(drawable instanceof MouseListener){
+				MouseListener ml = (MouseListener) drawable;
+				ml.mouseClicked(arg0);
+			}
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+
+		arg0.consume();
+		for(DrawableObj drawable : drawables){
+			if(drawable instanceof MouseListener){
+				MouseListener ml = (MouseListener) drawable;
+				ml.mouseEntered(arg0);
+			}
+		}
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+
+		arg0.consume();
+		for(DrawableObj drawable : drawables){
+			if(drawable instanceof MouseListener){
+				MouseListener ml = (MouseListener) drawable;
+				ml.mouseExited(arg0);
+			}
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+
+		arg0.consume();
+		for(DrawableObj drawable : drawables){
+			if(drawable instanceof MouseListener){
+				MouseListener ml = (MouseListener) drawable;
+				ml.mousePressed(arg0);
+			}
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+
+		arg0.consume();
+		for(DrawableObj drawable : drawables){
+			if(drawable instanceof MouseListener){
+				MouseListener ml = (MouseListener) drawable;
+				ml.mouseReleased(arg0);
+			}
+		}
+	}
+	
+	
+	/* Mouse Motion Listener */
+	
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		
+		arg0.consume();
+		for(DrawableObj drawable : drawables){
+			if(drawable instanceof MouseMotionListener){
+				MouseMotionListener ml = (MouseMotionListener) drawable;
+				ml.mouseDragged(arg0);
+			}
+		}
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		
+		arg0.consume();
+		for(DrawableObj drawable : drawables){
+			if(drawable instanceof MouseMotionListener){
+				MouseMotionListener ml = (MouseMotionListener) drawable;
+				ml.mouseMoved(arg0);
+			}
+		}
+	}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent arg0) {
+		
+		arg0.consume();
+		for(DrawableObj drawable : drawables){
+			if(drawable instanceof MouseWheelListener){
+				MouseWheelListener ml = (MouseWheelListener) drawable;
+				ml.mouseWheelMoved(arg0);
+			}
+		}
+		
 	}
 }
