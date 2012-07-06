@@ -6,11 +6,8 @@ import java.util.Random;
 
 import model.animation.force.FVector;
 
-public class OrbitPattern implements IDemoPattern
+public class LinePattern implements IDemoPattern
 {
-	public OrbitPattern() {
-		// TODO Auto-generated constructor stub
-	}
 
 	@Override
 	public List<FVector> getVectorPoints() {
@@ -22,20 +19,29 @@ public class OrbitPattern implements IDemoPattern
 		centralVector.allow_move_y = false;
 		fvectors.add(centralVector);
 		
+		
+		FVector previousVector = centralVector;
 		Random r = new Random();
 		for(int i=0; i<10; i++){
 			
-			double _x = r.nextInt(800);
-			double _y =  r.nextInt(800);
-			System.out.print(_x + " : " + _y);
+			double _x = r.nextInt(100);
+			double _y =  0;
 			FVector vector = new FVector(_x, _y);
 			vector.initAcceleration();
-			vector.setParentVector(centralVector);
+			vector.setParentVector(previousVector);
+			centralVector.allow_move_y = false;
+			previousVector = vector;
 			fvectors.add(vector);
 		}
+		FVector lastVector = new FVector(500, 0);
+		lastVector.setParentVector(fvectors.get(fvectors.size()-1));
+		lastVector.allow_move_x = false;
+		lastVector.allow_move_y = false;
+		lastVector.initAcceleration();
+		fvectors.add(lastVector);
+		
 		
 		return fvectors;
 	}
-	
 	
 }

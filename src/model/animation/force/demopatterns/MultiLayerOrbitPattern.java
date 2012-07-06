@@ -19,9 +19,10 @@ public class MultiLayerOrbitPattern implements IDemoPattern
 	@Override
 	public List<FVector> getVectorPoints() {
 		List<FVector> fvectors = new ArrayList<FVector>();
-		FVector centralVector = new FVector(400, 300);
+		FVector centralVector = new FVector(0, 0);
 		centralVector.initAcceleration();
-		centralVector.moveable = false;
+		centralVector.allow_move_x = false;
+		centralVector.allow_move_y = false;
 		fvectors.add(centralVector);
 		
 		attachOrbitsTo(fvectors, centralVector,orbits,0);

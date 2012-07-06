@@ -71,6 +71,7 @@ public class AnimationPanel extends JPanel implements MouseListener, MouseMotion
 		
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
+		this.addMouseWheelListener(this);
 	}
 	
 	@Override

@@ -11,8 +11,10 @@ public class FVector
 	public double y;
 	public double x;
 	
-	public double charge = 100; 
-	public boolean moveable = true; 
+	public double charge = 1; 
+	
+	public boolean allow_move_x = true;
+	public boolean allow_move_y = true;
 	
 
 	
@@ -40,6 +42,17 @@ public class FVector
 			return true;
 		}
 		return false; 
+	}
+	
+	public void moveXY_by(double x, double y){
+		
+		if(allow_move_x){
+			this.x+=x;
+		}
+		
+		if(allow_move_y){
+			this.y+=y;
+		}
 	}
 	
 	public int getXCoord() {
