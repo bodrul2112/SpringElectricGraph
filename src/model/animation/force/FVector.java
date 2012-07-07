@@ -1,5 +1,6 @@
 package model.animation.force;
 
+import java.awt.Rectangle;
 import java.util.Random;
 
 public class FVector 
@@ -11,10 +12,13 @@ public class FVector
 	public double y;
 	public double x;
 	
-	public double charge = 1; 
+	public double charge = 200; 
 	
+	public boolean always_stationary = false;
 	public boolean allow_move_x = true;
 	public boolean allow_move_y = true;
+	
+	int clickRadius = 4; 
 	
 
 	
@@ -55,6 +59,11 @@ public class FVector
 		}
 	}
 	
+	public void forceMoveXY(double x, double y){
+		this.x = x;
+		this.y = y; 
+	}
+	
 	public int getXCoord() {
 		return (int) x;
 	}
@@ -70,6 +79,31 @@ public class FVector
 	public int getYCoord(double SCALE_FACTOR, int Y_TRANSLATION) {
 		return (int) ((y*SCALE_FACTOR))+Y_TRANSLATION;
 	}
+	
+	public Rectangle getClickArea(double SCALE_FACTOR, int X_TRANSLATION, int Y_TRANSLATION){
+		
+		int x = getXCoord(SCALE_FACTOR, X_TRANSLATION);
+		int y = getYCoord(SCALE_FACTOR, Y_TRANSLATION);
+		return new Rectangle(x-clickRadius, y-clickRadius, (clickRadius*2), (clickRadius*2));
+	}
+	
+	public void disableAutoMove(){
+		this.allow_move_x = false;
+		this.allow_move_y = false;
+	}
+	
+	public void enableAutoMove(){
+		if(!this.always_stationary){
+			this.allow_move_x = true;
+			this.allow_move_y = true;
+		}
+	}
+	
+	public boolean isMoveable(){
+		return(this.allow_move_x || this.allow_move_y);
+	}
+	
+	/* vector math */
 	
 	public FVector add(FVector fvector){
 		return new FVector(this.x + fvector.x, this.y + fvector.y );
