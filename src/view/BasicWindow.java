@@ -18,7 +18,7 @@ public class BasicWindow extends JFrame
 		
 		this.setLayout(new GridLayout(1, 1));
 		
-		AnimationPanel animationPanel = new AnimationPanel(800, 800, 300);
+		AnimationPanel animationPanel = new AnimationPanel(800, 800, 300); 
 		animationPanel.setBackgroundColor(Color.WHITE);
 		
 //		SimpleDrawableObj simpleDrawableObj = new SimpleDrawableObj(800, 600, 1, Color.BLUE);

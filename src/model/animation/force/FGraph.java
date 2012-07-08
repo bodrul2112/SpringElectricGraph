@@ -2,6 +2,7 @@ package model.animation.force;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -16,6 +17,7 @@ import model.animation.drawable.DrawableObj;
 import model.animation.drawable.RefreshingObj;
 import model.animation.force.demopatterns.LinePattern;
 import model.animation.force.demopatterns.MultiLayerOrbitPattern;
+import model.animation.force.demopatterns.NetPattern;
 
 public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelListener, MouseListener, MouseMotionListener
 {
@@ -28,10 +30,11 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 	double SCALE_FACTOR = 0.3d; 
 	int X_TRANSLATION = 0;
 	int Y_TRANSLATION = 0;
+	boolean DEBUG = true;
 	
 	public FGraph() {
 		
-		
+		/*
 		this.fvectors = (new MultiLayerOrbitPattern(3,5)).getVectorPoints();
 		minimumSpringLength = 1d; 
 		springConstant =  1d;
@@ -40,7 +43,7 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		SCALE_FACTOR = 0.1d; 
 		X_TRANSLATION = 400;
 		Y_TRANSLATION = 300;
-		
+		*/
 		
 		/*
 		this.fvectors = (new LinePattern()).getVectorPoints();
@@ -52,6 +55,16 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		X_TRANSLATION = 0;
 		Y_TRANSLATION = 300;
 		*/
+		
+		this.fvectors = (new NetPattern(10,10)).getVectorPoints();
+		minimumSpringLength = 1d; 
+		springConstant =  1d;
+		coloumbConstant = 1d;
+		
+		SCALE_FACTOR = 1d; 
+		X_TRANSLATION = 0;
+		Y_TRANSLATION = 300;
+	
 	}
 	
 	@Override
@@ -90,6 +103,13 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 				g2d.drawRect(rect.x, rect.y, rect.width, rect.height);
 			}
 		}
+		
+		//if(DEBUG){
+		Font font = new Font("Serif", Font.PLAIN, 14);
+	    g2d.setFont(font);
+			g2d.setColor(Color.BLACK);
+			g2d.drawString("SCALE FACTOR : " + SCALE_FACTOR, 10, 20);
+		//}
 		
 	}
 
