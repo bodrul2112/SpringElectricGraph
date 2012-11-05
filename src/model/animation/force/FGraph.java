@@ -35,7 +35,7 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 	public FGraph() {
 		
 		/*
-		this.fvectors = (new MultiLayerOrbitPattern(3,5)).getVectorPoints();
+		this.fvectors = (new MultiLayerOrbitPattern(2,5)).getVectorPoints();
 		minimumSpringLength = 1d; 
 		springConstant =  1d;
 		coloumbConstant = 1d;
@@ -43,9 +43,9 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		SCALE_FACTOR = 0.1d; 
 		X_TRANSLATION = 400;
 		Y_TRANSLATION = 300;
-		*/
 		
-		/*
+		
+		
 		this.fvectors = (new LinePattern()).getVectorPoints();
 		minimumSpringLength = 1d; 
 		springConstant =  1d;
@@ -54,7 +54,9 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		SCALE_FACTOR = 1d; 
 		X_TRANSLATION = 0;
 		Y_TRANSLATION = 300;
+		
 		*/
+		
 		
 		this.fvectors = (new NetPattern(10,10)).getVectorPoints();
 		minimumSpringLength = 1d; 
@@ -64,7 +66,7 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		SCALE_FACTOR = 1d; 
 		X_TRANSLATION = 0;
 		Y_TRANSLATION = 300;
-	
+		
 	}
 	
 	@Override
