@@ -18,6 +18,7 @@ import model.animation.drawable.RefreshingObj;
 import model.animation.force.demopatterns.LinePattern;
 import model.animation.force.demopatterns.MultiLayerOrbitPattern;
 import model.animation.force.demopatterns.NetPattern;
+import model.animation.force.demopatterns.OrbitPattern;
 
 public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelListener, MouseListener, MouseMotionListener
 {
@@ -34,8 +35,17 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 	
 	public FGraph() {
 		
+		this.fvectors = (new OrbitPattern(25)).getVectorPoints();
+		minimumSpringLength = 3d; 
+		springConstant =  0.5d;
+		coloumbConstant = 0.5d;
+		
+		SCALE_FACTOR = 1d; 
+		X_TRANSLATION = 400;
+		Y_TRANSLATION = 300;
+		
 		/*
-		this.fvectors = (new MultiLayerOrbitPattern(2,5)).getVectorPoints();
+		this.fvectors = (new MultiLayerOrbitPattern(1,5)).getVectorPoints();
 		minimumSpringLength = 1d; 
 		springConstant =  1d;
 		coloumbConstant = 1d;
@@ -43,8 +53,6 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		SCALE_FACTOR = 0.1d; 
 		X_TRANSLATION = 400;
 		Y_TRANSLATION = 300;
-		
-		
 		
 		this.fvectors = (new LinePattern()).getVectorPoints();
 		minimumSpringLength = 1d; 
@@ -55,9 +63,6 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		X_TRANSLATION = 0;
 		Y_TRANSLATION = 300;
 		
-		*/
-		
-		
 		this.fvectors = (new NetPattern(10,10)).getVectorPoints();
 		minimumSpringLength = 1d; 
 		springConstant =  1d;
@@ -66,7 +71,7 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		SCALE_FACTOR = 1d; 
 		X_TRANSLATION = 0;
 		Y_TRANSLATION = 300;
-		
+		*/
 	}
 	
 	@Override
@@ -154,15 +159,18 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 					
 					a_node.nextAcceleration = a_node.nextAcceleration.add(force);
 					b_node.nextAcceleration = b_node.nextAcceleration.subtract(force);
+					
 				}
 			}
 		}
 		
-		for(int i=0; i<fvectors.size(); i++){
-			
+		for(int i=0; i<fvectors.size(); i++)
+		{
 			FVector node = fvectors.get(i);
 			if(node.allow_move_x || node.allow_move_y){
 				FVector half_a_t_squared = node.nextAcceleration.multiply(0.5d);
+				
+				System.out.println("half at sq " + half_a_t_squared.x +","+ half_a_t_squared.y);
 				
 				if(Math.abs(half_a_t_squared.x)>500){
 					//half_a_t_squared.x *= 0.5;
@@ -177,7 +185,6 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 				node.y *= 0.3d;
 			}
 		}
-		
 	}
 
 	/* Mouse Wheel Listener */

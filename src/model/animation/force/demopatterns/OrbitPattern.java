@@ -8,8 +8,10 @@ import model.animation.force.FVector;
 
 public class OrbitPattern implements IDemoPattern
 {
-	public OrbitPattern() {
-		// TODO Auto-generated constructor stub
+	private int orbits;
+
+	public OrbitPattern(int orbits) {
+		this.orbits = orbits;
 	}
 
 	@Override
@@ -22,8 +24,10 @@ public class OrbitPattern implements IDemoPattern
 		centralVector.allow_move_y = false;
 		fvectors.add(centralVector);
 		
+		centralVector.disableAutoMove();
+		
 		Random r = new Random();
-		for(int i=0; i<10; i++){
+		for(int i=0; i<orbits; i++){
 			
 			double _x = r.nextInt(800);
 			double _y =  r.nextInt(800);
