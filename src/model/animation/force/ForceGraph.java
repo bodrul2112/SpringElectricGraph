@@ -20,10 +20,10 @@ import model.animation.force.demopatterns.MultiLayerOrbitPattern;
 import model.animation.force.demopatterns.NetPattern;
 import model.animation.force.demopatterns.OrbitPattern;
 
-public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelListener, MouseListener, MouseMotionListener
+public class ForceGraph extends RefreshingObj implements DrawableObj, MouseWheelListener, MouseListener, MouseMotionListener
 {
 
-	List<FVector> fvectors = new ArrayList<FVector>();
+	List<ForceVector> ForceVectors = new ArrayList<ForceVector>();
 	double minimumSpringLength = 1d; 
 	double springConstant =  1d;
 	double coloumbConstant = 1d;
@@ -33,9 +33,10 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 	int Y_TRANSLATION = 0;
 	boolean DEBUG = true;
 	
-	public FGraph() {
+	public ForceGraph() {
 		
-		this.fvectors = (new OrbitPattern(25)).getVectorPoints();
+		
+		this.ForceVectors = (new OrbitPattern(25)).getVectorPoints();
 		minimumSpringLength = 3d; 
 		springConstant =  0.5d;
 		coloumbConstant = 0.5d;
@@ -45,16 +46,19 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		Y_TRANSLATION = 300;
 		
 		/*
-		this.fvectors = (new MultiLayerOrbitPattern(1,5)).getVectorPoints();
+		this.ForceVectors = (new MultiLayerOrbitPattern(2,5)).getVectorPoints();
 		minimumSpringLength = 1d; 
 		springConstant =  1d;
 		coloumbConstant = 1d;
 		
-		SCALE_FACTOR = 0.1d; 
+		SCALE_FACTOR = 1d; 
 		X_TRANSLATION = 400;
 		Y_TRANSLATION = 300;
 		
-		this.fvectors = (new LinePattern()).getVectorPoints();
+		*/
+		
+		/*
+		this.ForceVectors = (new LinePattern()).getVectorPoints();
 		minimumSpringLength = 1d; 
 		springConstant =  1d;
 		coloumbConstant = 1d;
@@ -63,7 +67,7 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		X_TRANSLATION = 0;
 		Y_TRANSLATION = 300;
 		
-		this.fvectors = (new NetPattern(10,10)).getVectorPoints();
+		this.ForceVectors = (new NetPattern(10,10)).getVectorPoints();
 		minimumSpringLength = 1d; 
 		springConstant =  1d;
 		coloumbConstant = 1d;
@@ -79,34 +83,34 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		
 		// draw dots
 		g2d.setStroke(new BasicStroke(3));
-		for(int i=0; i<fvectors.size(); i++){
-			FVector fVector = fvectors.get(i);
-			if(fVector.isMoveable()){
+		for(int i=0; i<ForceVectors.size(); i++){
+			ForceVector ForceVector = ForceVectors.get(i);
+			if(ForceVector.isMoveable()){
 				g2d.setColor(Color.BLACK);
 			}else{
 				g2d.setColor(Color.RED);
 			}
-			g2d.drawLine(fVector.getXCoord(SCALE_FACTOR, X_TRANSLATION), fVector.getYCoord(SCALE_FACTOR, Y_TRANSLATION), fVector.getXCoord(SCALE_FACTOR, X_TRANSLATION), fVector.getYCoord(SCALE_FACTOR, Y_TRANSLATION));
+			g2d.drawLine(ForceVector.getXCoord(SCALE_FACTOR, X_TRANSLATION), ForceVector.getYCoord(SCALE_FACTOR, Y_TRANSLATION), ForceVector.getXCoord(SCALE_FACTOR, X_TRANSLATION), ForceVector.getYCoord(SCALE_FACTOR, Y_TRANSLATION));
 		}
 		
 		// draw lines
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.setStroke(new BasicStroke(1));
-		for(int i=0; i<fvectors.size(); i++){
-			FVector fVector = fvectors.get(i);
-			if(fVector.parentVector != null){
-				FVector parentVector = fVector.parentVector;
-				g2d.drawLine(fVector.getXCoord(SCALE_FACTOR, X_TRANSLATION), fVector.getYCoord(SCALE_FACTOR, Y_TRANSLATION), parentVector.getXCoord(SCALE_FACTOR, X_TRANSLATION), parentVector.getYCoord(SCALE_FACTOR, Y_TRANSLATION));
+		for(int i=0; i<ForceVectors.size(); i++){
+			ForceVector ForceVector = ForceVectors.get(i);
+			if(ForceVector.parentVector != null){
+				ForceVector parentVector = ForceVector.parentVector;
+				g2d.drawLine(ForceVector.getXCoord(SCALE_FACTOR, X_TRANSLATION), ForceVector.getYCoord(SCALE_FACTOR, Y_TRANSLATION), parentVector.getXCoord(SCALE_FACTOR, X_TRANSLATION), parentVector.getYCoord(SCALE_FACTOR, Y_TRANSLATION));
 			}
 		}
 		
 		// draw click radius
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.setStroke(new BasicStroke(1));
-		for(int i=0; i<fvectors.size(); i++){
+		for(int i=0; i<ForceVectors.size(); i++){
 			
-			if(!fvectors.get(i).isMoveable()){
-				Rectangle rect = fvectors.get(i).getClickArea(SCALE_FACTOR, X_TRANSLATION, Y_TRANSLATION);
+			if(!ForceVectors.get(i).isMoveable()){
+				Rectangle rect = ForceVectors.get(i).getClickArea(SCALE_FACTOR, X_TRANSLATION, Y_TRANSLATION);
 				g2d.drawRect(rect.x, rect.y, rect.width, rect.height);
 			}
 		}
@@ -125,15 +129,15 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		
 		// Hooke's Law
 		// F = -k x
-		for(int i=0; i<fvectors.size(); i++){
+		for(int i=0; i<ForceVectors.size(); i++){
 			
-			FVector childVector = fvectors.get(i);
+			ForceVector childVector = ForceVectors.get(i);
 			
 			if(childVector.parentVector != null){
-				FVector parentVector = childVector.parentVector;
-				FVector distance = parentVector.subtract(childVector);
-				FVector restingDistance = distance.normalize().multiply(minimumSpringLength);
-				FVector force = distance.subtract(restingDistance).multiply(-springConstant);
+				ForceVector parentVector = childVector.parentVector;
+				ForceVector distance = parentVector.subtract(childVector);
+				ForceVector restingDistance = distance.normalize().multiply(minimumSpringLength);
+				ForceVector force = distance.subtract(restingDistance).multiply(-springConstant);
 				
 				parentVector.nextAcceleration = parentVector.nextAcceleration.add(force);
 				childVector.nextAcceleration = childVector.nextAcceleration.subtract(force);
@@ -142,20 +146,20 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		
 		// Columb's Law
 		// F = Q1 Q2 / d^2
-		for(int i=0; i<fvectors.size(); i++){
+		for(int i=0; i<ForceVectors.size(); i++){
 			
-			FVector a_node = fvectors.get(i);
-			for(int j=0; j<fvectors.size(); j++){
-				if(!a_node.equals(fvectors.get(j))){
-					FVector b_node = fvectors.get(j);
+			ForceVector a_node = ForceVectors.get(i);
+			for(int j=0; j<ForceVectors.size(); j++){
+				if(!a_node.equals(ForceVectors.get(j))){
+					ForceVector b_node = ForceVectors.get(j);
 					
-					FVector distance = a_node.subtract(b_node);
+					ForceVector distance = a_node.subtract(b_node);
 					double modulus = distance.modulus();
-					FVector direction = distance.multiply((double) (1/modulus));
+					ForceVector direction = distance.multiply((double) (1/modulus));
 					double modulus_squared = Math.pow(modulus, 2);
 					double k_qq_dij = coloumbConstant * ((a_node.charge * b_node.charge)/modulus_squared);
 					
-					FVector force = direction.multiply(k_qq_dij);
+					ForceVector force = direction.multiply(k_qq_dij);
 					
 					a_node.nextAcceleration = a_node.nextAcceleration.add(force);
 					b_node.nextAcceleration = b_node.nextAcceleration.subtract(force);
@@ -164,11 +168,11 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 			}
 		}
 		
-		for(int i=0; i<fvectors.size(); i++)
+		for(int i=0; i<ForceVectors.size(); i++)
 		{
-			FVector node = fvectors.get(i);
+			ForceVector node = ForceVectors.get(i);
 			if(node.allow_move_x || node.allow_move_y){
-				FVector half_a_t_squared = node.nextAcceleration.multiply(0.5d);
+				ForceVector half_a_t_squared = node.nextAcceleration.multiply(0.5d);
 				
 				System.out.println("half at sq " + half_a_t_squared.x +","+ half_a_t_squared.y);
 				
@@ -230,7 +234,7 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		
 	}
 
-	FVector selectedVector = null; 
+	ForceVector selectedVector = null; 
 	int selectedVector_ORIG_X;
 	int selectedVector_ORIG_Y;
 	
@@ -241,11 +245,11 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		starty = arg0.getY();
 		
 		boolean selected = false;
-		for(int i=0; i<fvectors.size(); i++){
-			if(fvectors.get(i).getClickArea(SCALE_FACTOR, X_TRANSLATION, Y_TRANSLATION).contains(arg0.getX(), arg0.getY())){
+		for(int i=0; i<ForceVectors.size(); i++){
+			if(ForceVectors.get(i).getClickArea(SCALE_FACTOR, X_TRANSLATION, Y_TRANSLATION).contains(arg0.getX(), arg0.getY())){
 				
 				selected = true;
-				selectedVector = fvectors.get(i);
+				selectedVector = ForceVectors.get(i);
 				selectedVector_ORIG_X = selectedVector.getXCoord(SCALE_FACTOR, X_TRANSLATION);
 				selectedVector_ORIG_Y = selectedVector.getYCoord(SCALE_FACTOR, Y_TRANSLATION);
 				selectedVector.disableAutoMove();
@@ -262,8 +266,8 @@ public class FGraph extends RefreshingObj implements DrawableObj, MouseWheelList
 		else if(!selected){
 			if(arg0.getButton()==2 || arg0.getButton()==3){
 				// release all forced nodes that are not stationary nodes
-				for(int i=0; i<fvectors.size(); i++){
-					fvectors.get(i).enableAutoMove();
+				for(int i=0; i<ForceVectors.size(); i++){
+					ForceVectors.get(i).enableAutoMove();
 				}
 			}
 			pressed = true;

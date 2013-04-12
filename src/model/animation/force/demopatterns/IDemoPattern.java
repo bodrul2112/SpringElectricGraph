@@ -2,10 +2,10 @@ package model.animation.force.demopatterns;
 
 import java.util.List;
 
-import model.animation.force.FVector;
+import model.animation.force.ForceVector;
 
 public interface IDemoPattern {
 	
-	public List<FVector> getVectorPoints();
+	public List<ForceVector> getVectorPoints();
 
 }

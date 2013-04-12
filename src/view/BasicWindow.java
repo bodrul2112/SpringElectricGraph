@@ -5,7 +5,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 
-import model.animation.force.FGraph;
+import model.animation.force.ForceGraph;
 import model.animation.internal.SimpleDrawableObj;
 import model.animation.panel.AnimationPanel;
 
@@ -33,7 +33,7 @@ public class BasicWindow extends JFrame
 //		animationPanel.addToDrawableList(simpleDrawableObj);
 //		animationPanel.addToDrawableList(simpleDrawableObj2);
 		
-		FGraph fGraph = new FGraph();
+		ForceGraph fGraph = new ForceGraph();
 		fGraph.setFpsRate(60);
 		fGraph.startRefreshing();
 		

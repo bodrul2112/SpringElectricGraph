@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import model.animation.force.FVector;
+import model.animation.force.ForceVector;
 
 public class OrbitPattern implements IDemoPattern
 {
@@ -15,11 +15,11 @@ public class OrbitPattern implements IDemoPattern
 	}
 
 	@Override
-	public List<FVector> getVectorPoints() {
+	public List<ForceVector> getVectorPoints() {
 		
-		List<FVector> fvectors = new ArrayList<FVector>();
-		FVector centralVector = new FVector(0, 0);
-		centralVector.initAcceleration();
+		List<ForceVector> fvectors = new ArrayList<ForceVector>();
+		ForceVector centralVector = new ForceVector(0, 0);
+		centralVector.initWithRandomAcceleration();
 		centralVector.allow_move_x = false;
 		centralVector.allow_move_y = false;
 		fvectors.add(centralVector);
@@ -32,8 +32,8 @@ public class OrbitPattern implements IDemoPattern
 			double _x = r.nextInt(800);
 			double _y =  r.nextInt(800);
 			System.out.print(_x + " : " + _y);
-			FVector vector = new FVector(_x, _y);
-			vector.initAcceleration();
+			ForceVector vector = new ForceVector(_x, _y);
+			vector.initWithRandomAcceleration();
 			vector.setParentVector(centralVector);
 			fvectors.add(vector);
 		}

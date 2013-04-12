@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import model.animation.force.FVector;
+import model.animation.force.ForceVector;
 
 public class MultiLayerOrbitPattern implements IDemoPattern
 {
@@ -17,10 +17,10 @@ public class MultiLayerOrbitPattern implements IDemoPattern
 	}
 
 	@Override
-	public List<FVector> getVectorPoints() {
-		List<FVector> fvectors = new ArrayList<FVector>();
-		FVector centralVector = new FVector(0, 0);
-		centralVector.initAcceleration();
+	public List<ForceVector> getVectorPoints() {
+		List<ForceVector> fvectors = new ArrayList<ForceVector>();
+		ForceVector centralVector = new ForceVector(0, 0);
+		centralVector.initWithRandomAcceleration();
 		centralVector.disableAutoMove();
 		centralVector.always_stationary = true;
 		fvectors.add(centralVector);
@@ -38,14 +38,14 @@ public class MultiLayerOrbitPattern implements IDemoPattern
 		return fvectors;
 	}
 
-	private void attachOrbitsTo(List<FVector> fvectors, FVector centralVector, int numberOfOrbits, int currentLayer) {
+	private void attachOrbitsTo(List<ForceVector> fvectors, ForceVector centralVector, int numberOfOrbits, int currentLayer) {
 		Random r = new Random();
 		for(int i=0; i<numberOfOrbits; i++){
 			
 			double _x = r.nextInt(800);
 			double _y =  r.nextInt(800);
-			FVector vector = new FVector(-400+_x,-400+_y);
-			vector.initAcceleration();
+			ForceVector vector = new ForceVector(-400+_x,-400+_y);
+			vector.initWithRandomAcceleration();
 			vector.setParentVector(centralVector);
 			fvectors.add(vector);
 			

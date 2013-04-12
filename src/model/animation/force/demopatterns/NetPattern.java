@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import model.animation.force.FVector;
+import model.animation.force.ForceVector;
 
 public class NetPattern implements IDemoPattern
 {
@@ -19,18 +19,18 @@ public class NetPattern implements IDemoPattern
 	}
 	
 	@Override
-	public List<FVector> getVectorPoints() {
+	public List<ForceVector> getVectorPoints() {
 		
 		
-		List<FVector> fvectors = new ArrayList<FVector>();
+		List<ForceVector> fvectors = new ArrayList<ForceVector>();
 		
-		FVector[][] vectorNet = new FVector[rows][cols];
+		ForceVector[][] vectorNet = new ForceVector[rows][cols];
 		
 		for(int i=0; i<rows; i++){
 			for(int j=0; j<cols; j++){
-				vectorNet[i][j] = new FVector(i,j);
+				vectorNet[i][j] = new ForceVector(i,j);
 				fvectors.add(vectorNet[i][j]);
-				vectorNet[i][j].initAcceleration();
+				vectorNet[i][j].initWithRandomAcceleration();
 				vectorNet[i][j].charge = 5;
 			}
 		}
