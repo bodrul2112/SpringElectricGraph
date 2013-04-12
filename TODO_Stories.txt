@@ -1,0 +1,10 @@
+
+1) Refactor changes from Android force graph back into this project
+2) Abstract away the mouse/touch controls
+3) Abstract away drawing to graphics2D/canvas
+4) Abstract away set up
+
+
+Abstract Setup -> handler -> Abstract ForceGraph -> handler -> AbstractRenderer -> handler
+
+Effectively I should be able to manually port the code from one language to another pretty easily. 
