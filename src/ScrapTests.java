@@ -5,7 +5,9 @@ import java.util.ArrayList;
  */
 
 public class ScrapTests {
-	
-		
-	
+
+    public ScrapTests() {
+
+        // test push
+    }
 }
